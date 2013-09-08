@@ -58,56 +58,61 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     // return (but do not delete) a random item
-    public Item sample() { return q[StdRandom.uniform(count)]; }
+    public Item sample() {
+        if (isEmpty())
+            throw new java.util.NoSuchElementException();
+
+        return q[StdRandom.uniform(count)];
+    }
     
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() { return new ArrayIterator(); }
     
     private class ArrayIterator implements Iterator<Item> {
         private int i = 0;
+        private Item[] array;
         
+        public ArrayIterator() {
+            array = (Item[]) new Object[count];
+            for (int j = 0; j < count; j++)
+                array[j] = q[j];
+            for (int j = 0; j < count; j++) {
+                int r = StdRandom.uniform(j+1);
+                Item tmp = array[j];
+                array[j] = array[r];
+                array[r] = tmp;
+            }
+        }
+
         public boolean hasNext() { return i < count; }
         public void remove() {
             throw new java.lang.UnsupportedOperationException();
         }
-        public Item    next() {
-            if (i > count)
+        public Item next() {
+            if (i >= count)
                 throw new java.util.NoSuchElementException();
-            return q[i++];
+            return array[i++];
         }
     }
-    
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        RandomizedQueue<Integer> q = new RandomizedQueue<Integer>();
-        
-        StdOut.println(q.isEmpty());
-        q.enqueue(1);
-        q.enqueue(2);
-        q.enqueue(3);
-        q.enqueue(4);
-        q.enqueue(5);
-        q.enqueue(6);
-        q.enqueue(7);
-        StdOut.println(q.size());
-        
-        for (Integer i : q)
-            StdOut.print(i + " ");
-        StdOut.println();
-        
-        StdOut.println(q.dequeue());
-        
-        for (Integer i : q)
-            StdOut.print(i + " ");
-        StdOut.println();
-        
-        StdOut.println(q.dequeue());
-        StdOut.println(q.dequeue());
-        StdOut.println(q.size());
-        
-        for (Integer i : q)
-            StdOut.print(i + " ");
-        StdOut.println();
-    }
 
+    public static void main(String[] args) {
+        RandomizedQueue<Integer> z = new RandomizedQueue<Integer>();
+        z.enqueue(1);
+        z.enqueue(4);
+        z.enqueue(3);
+        z.enqueue(6);
+        z.enqueue(7);
+        z.enqueue(8);
+        z.enqueue(41);
+        z.enqueue(53);
+        StdOut.printf("size of queue: %d\n", z.size());
+
+        for (int i : z) {
+            StdOut.printf("outer i = %d\n", i);
+            for (int j : z) {
+                StdOut.printf(" %d ", j);
+            }
+            StdOut.println();
+        }
+    }
 }

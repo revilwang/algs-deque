@@ -114,33 +114,4 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
     
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        Deque<Integer> deque = new Deque<Integer>();
-        System.out.println(deque.isEmpty());
-        //deque.addFirst(5);
-        //deque.addLast(6);
-        System.out.println(deque.isEmpty());
-        //System.out.println(deque.removeLast());
-        System.out.println(deque.isEmpty());
-        System.out.println(deque.size());
-        //System.out.println(deque.removeFirst());
-        System.out.println(deque.isEmpty());
-        deque.addFirst(1);
-        deque.addFirst(2);
-        deque.addFirst(3);
-        deque.addFirst(4);
-        StdOut.println(deque.removeLast());
-        StdOut.println(deque.removeLast());
-        
-        deque.addLast(5);
-        StdOut.println(deque.removeFirst());
-        StdOut.println(deque.removeFirst());
-        StdOut.println(deque.removeFirst());
-        System.out.println(deque.size());
-        
-        for (Integer i : deque)
-            StdOut.println(i);
-    }
-
 }
